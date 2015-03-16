@@ -89,7 +89,7 @@ public class GameClient extends JFrame implements KeyListener {
 	private Keyboard key;
 	private Client client;
 	private HashMap<Integer,GameObjectClient> world;
-	
+	ciao
 
 	private void setClient() throws IOException{
 		client = new Client();
