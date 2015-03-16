@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/home/anonymous/workspace/Curve/src/org/dyn4j/examples/dyn4j-3.1.10.jar"/>
+	<classpathentry kind="lib" path="/home/anonymous/Scrivania/EclipseLuna/kryonet-2.21/jars/production/onejar/kryonet-2.21-all.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
