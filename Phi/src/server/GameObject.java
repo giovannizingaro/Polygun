@@ -7,11 +7,9 @@ public class GameObject {
 	private int x;
 	private int y;
 
-
-
-	public GameObject(int x, int y) {
+	public GameObject(int id, int x, int y) {
 		super();
-		this.id  = COUNT;
+		this.id  = id;
 		this.x = x;
 		this.y = y;
 		COUNT ++;
