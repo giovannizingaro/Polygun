@@ -1,19 +1,17 @@
 package server;	
 
+import java.awt.Rectangle;
 import java.awt.Shape;
 
 public class GameObject {
 
 	protected int id;
-	protected int x;
-	protected int y;
-	protected Shape shape;
+	protected Rectangle shape;
 
-	public GameObject(int id, int x, int y) {
+	public GameObject(int id, Rectangle shape) {
 		super();
 		this.id  = id;
-		this.x = x;
-		this.y = y;
+		this.shape = shape;
 	}
 
 	public int getId() {
@@ -23,33 +21,33 @@ public class GameObject {
 		this.id = id;
 	}
 	public int getX() {
-		return x;
+		return shape.x;
 	}
 	public void setX(int x) {
-		this.x = x;
+		shape.x = x;
 	}
 	public int getY() {
-		return y;
+		return shape.y;
 	}
 	public void setY(int y) {
-		this.y = y;
+		shape.y = y;
 	}
 	
 	public void incX(int dx)
 	{
-		this.x+=x;
+		shape.x += dx;
 	}
 	
 	public void incY(int dy)
 	{
-		this.y+=y;
+		shape.y += dy;
 	}
 
-	public Shape getShape() {
+	public Rectangle getShape() {
 		return shape;
 	}
 
-	public void setShape(Shape shape) {
+	public void setShape(Rectangle shape) {
 		this.shape = shape;
 	}
 

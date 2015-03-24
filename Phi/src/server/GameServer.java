@@ -24,21 +24,13 @@
  */
 package server;
 
-import java.awt.Color;
+import java.awt.Rectangle;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.dyn4j.dynamics.BodyFixture;
 import org.dyn4j.dynamics.World;
-import org.dyn4j.geometry.Convex;
-import org.dyn4j.geometry.Mass;
-import org.dyn4j.geometry.Rectangle;
-import org.dyn4j.geometry.Transform;
-import org.dyn4j.geometry.Triangle;
 import org.dyn4j.geometry.Vector2;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -51,12 +43,6 @@ import common.Keyboard;
 import common.Notification;
 
 public class GameServer {
-	/** The serial version id */
-	private static final long serialVersionUID = 5663760293144882635L;
-
-	/** The scale 45 pixels per meter */
-	public static final double SCALE = 45.0;
-
 	/** The conversion factor from nano to base */
 	public static final double NANO_TO_BASE = 1.0e9;
 
@@ -134,8 +120,9 @@ public class GameServer {
 
 	protected void initializeWorld() {
 		this.world = new World();
-//		Rectangle floorRect = new Rectangle(15.0, 1.0);
-//		GameObject floor = new GameObject(0);
+		Rectangle floorRect = new Rectangle();
+		
+		GameObject floor = new GameObject(0,floorRect);
 //		floor.addFixture(new BodyFixture(floorRect));
 //		floor.setMass(Mass.Type.INFINITE);
 //		this.world.addBody(floor);				
