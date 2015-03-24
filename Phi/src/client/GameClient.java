@@ -86,6 +86,7 @@ public class GameClient extends JFrame implements KeyListener {
 	protected Canvas canvas;
 	protected boolean stopped;
 	protected long last;
+	
 	private Keyboard key;
 	private Client client;
 	private HashMap<Integer,GameObjectClient> world;

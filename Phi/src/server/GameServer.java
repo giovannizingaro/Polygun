@@ -63,9 +63,6 @@ public class GameServer {
 	/** The dynamics engine */
 	protected World world;
 
-	/** Wether the example is stopped or not */
-	protected boolean stopped;
-
 	/** The time stamp for the last iteration */
 	protected long last;
 
@@ -84,6 +81,8 @@ public class GameServer {
 		kryo.register(Notification.class);
 		kryo.register(GameObjectDTO.class);
 		kryo.register(Keyboard.class);
+		kryo.register(Vector2.class);
+
 
 		server.start();
 		try {
@@ -144,7 +143,6 @@ public class GameServer {
 	public GameServer() throws IOException {		
 		setServer();
 		players = new HashMap<Integer,GameObject>();
-		this.stopped = false;
 		this.initializeWorld();
 	}
 
@@ -168,11 +166,13 @@ public class GameServer {
 
 		// run a separate thread to do active rendering
 		// because we don't want to do it on the EDT
+		new UpdateClientThread().start();
+		
 		Thread thread = new Thread() {
 			public void run() {
 				// perform an infinite loop stopped
 				// render as fast as possible
-				while (!isStopped()) {
+				while (true) {
 					gameLoop();
 					try {
 						Thread.sleep(5);
@@ -195,9 +195,6 @@ public class GameServer {
 
 
 	protected void gameLoop() {
-
-		// update the World
-
 		// get the current time
 		long time = System.nanoTime();
 		// get the elapsed time from the last iteration
@@ -209,8 +206,24 @@ public class GameServer {
 		// update the world with the elapsed time
 		this.world.update(elapsedTime);
 		checkPlayerOut();
-		sendUpdateToClients();
+//		sendUpdateToClients();
+	}
+	
+	private class UpdateClientThread extends Thread{
 
+		@Override
+		public void run() {
+			while(true){
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				sendUpdateToClients();
+			}
+		}
+		
 	}
 
 	private void checkPlayerOut(){
@@ -249,14 +262,6 @@ public class GameServer {
 	private void sendUpdateToClient(int id){
 		GameObject go = players.get(id);
 		server.sendToAllTCP(go.getGameObjectDTO());
-	}
-
-	public synchronized void stop() {
-		this.stopped = true;
-	}
-
-	public synchronized boolean isStopped() {
-		return this.stopped;
 	}
 
 	public static void main(String[] args) throws IOException {
