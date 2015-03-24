@@ -1,21 +1,19 @@
 package server;	
 
-import common.Keyboard;
+import java.awt.Shape;
 
 public class GameObject {
 
-	private static int COUNT = 0;
-	private int id;
-	private int x;
-	private int y;
-	public Keyboard key; 
+	protected int id;
+	protected int x;
+	protected int y;
+	protected Shape shape;
 
 	public GameObject(int id, int x, int y) {
 		super();
 		this.id  = id;
 		this.x = x;
 		this.y = y;
-		COUNT ++;
 	}
 
 	public int getId() {
@@ -45,6 +43,14 @@ public class GameObject {
 	public void incY(int dy)
 	{
 		this.y+=y;
+	}
+
+	public Shape getShape() {
+		return shape;
+	}
+
+	public void setShape(Shape shape) {
+		this.shape = shape;
 	}
 
 }
