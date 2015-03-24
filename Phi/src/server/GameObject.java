@@ -1,11 +1,14 @@
 package server;	
 
+import common.Keyboard;
+
 public class GameObject {
 
 	private static int COUNT = 0;
 	private int id;
 	private int x;
 	private int y;
+	public Keyboard key; 
 
 
 
@@ -35,7 +38,15 @@ public class GameObject {
 	public void setY(int y) {
 		this.y = y;
 	}
-
-
+	
+	public void incX(int dx)
+	{
+		this.x+=x;
+	}
+	
+	public void incY(int dy)
+	{
+		this.y+=y;
+	}
 
 }
