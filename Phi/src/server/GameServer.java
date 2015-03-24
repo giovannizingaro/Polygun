@@ -24,21 +24,13 @@
  */
 package server;
 
-import java.awt.Color;
+import java.awt.Rectangle;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.dyn4j.dynamics.BodyFixture;
 import org.dyn4j.dynamics.World;
-import org.dyn4j.geometry.Convex;
-import org.dyn4j.geometry.Mass;
-import org.dyn4j.geometry.Rectangle;
-import org.dyn4j.geometry.Transform;
-import org.dyn4j.geometry.Triangle;
 import org.dyn4j.geometry.Vector2;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -51,12 +43,6 @@ import common.Keyboard;
 import common.Notification;
 
 public class GameServer {
-	/** The serial version id */
-	private static final long serialVersionUID = 5663760293144882635L;
-
-	/** The scale 45 pixels per meter */
-	public static final double SCALE = 45.0;
-
 	/** The conversion factor from nano to base */
 	public static final double NANO_TO_BASE = 1.0e9;
 
@@ -70,7 +56,7 @@ public class GameServer {
 	 * Default constructor for the window
 	 * @throws IOException 
 	 */
-	private HashMap<Integer,GameObject> players;
+	private HashMap<Integer,Player> players;
 
 	private Server server;
 
@@ -101,14 +87,8 @@ public class GameServer {
 				}
 				if(object instanceof Keyboard){
 					Keyboard key = (Keyboard)object;
-					GameObject go = players.get(connection.getID());
-					if(key.RIGHT) go.applyForce(new Vector2(20,0));
-					if(key.LEFT) go.applyForce(new Vector2(-20,0));
-					if(key.UP && go.getLinearVelocity().y==0) {
-						go.applyImpulse(new Vector2(0,5));
-						go.applyTorque(10);
-					}
-					if(key.DOWN) go.applyTorque(20);
+					Player go = players.get(connection.getID());
+					go.key.UP = key.UP;
 				}
 
 			}
@@ -127,24 +107,25 @@ public class GameServer {
 
 	private void newPlayerHandler(int id){
 		System.out.println("Creo un nuovo giocatore");
-		GameObject player = new GameObject(id,0,0);
-		world.addBody(triangle);
+		Player player = new Player(id,0,0);
+//		world.addBody(triangle);
 		players.put(id, player);
 	}
 
 	public GameServer() throws IOException {		
 		setServer();
-		players = new HashMap<Integer,GameObject>();
+		players = new HashMap<Integer,Player>();
 		this.initializeWorld();
 	}
 
 	protected void initializeWorld() {
 		this.world = new World();
-		Rectangle floorRect = new Rectangle(15.0, 1.0);
-		GameObject floor = new GameObject(0);
-		floor.addFixture(new BodyFixture(floorRect));
-		floor.setMass(Mass.Type.INFINITE);
-		this.world.addBody(floor);				
+		Rectangle floorRect = new Rectangle();
+		
+		GameObject floor = new GameObject(0,floorRect);
+//		floor.addFixture(new BodyFixture(floorRect));
+//		floor.setMass(Mass.Type.INFINITE);
+//		this.world.addBody(floor);				
 	}
 
 	/**
@@ -219,26 +200,23 @@ public class GameServer {
 	}
 
 	private void checkPlayerOut(){
-		Iterator<GameObject> it = players.values().iterator();
+		Iterator<Player> it = players.values().iterator();
 		while(it.hasNext()){
-			GameObject go = it.next();
+			Player go = it.next();
 			if(go.getY()<-5){
-				Transform f = new Transform();
-				f.setTranslationY(10);
-				f.setTranslationX(go.getX());
-				go.setTransform(f);
+//				
 			}
 			if(go.getX()>10){
-				Transform f = new Transform();
-				f.setTranslationY(go.getY());
-				f.setTranslationX(-10);
-				go.setTransform(f);
+//				Transform f = new Transform();
+//				f.setTranslationY(go.getY());
+//				f.setTranslationX(-10);
+//				go.setTransform(f);
 			}
 			if(go.getX()<-10){
-				Transform f = new Transform();
-				f.setTranslationY(go.getY());
-				f.setTranslationX(10);
-				go.setTransform(f);
+//				Transform f = new Transform();
+//				f.setTranslationY(go.getY());
+//				f.setTranslationX(10);
+//				go.setTransform(f);
 			}
 		}
 	}
@@ -253,7 +231,7 @@ public class GameServer {
 
 	private void sendUpdateToClient(int id){
 		GameObject go = players.get(id);
-		server.sendToAllTCP(go.getGameObjectDTO());
+//		server.sendToAllTCP(go.getGameObjectDTO());
 	}
 
 	public static void main(String[] args) throws IOException {
