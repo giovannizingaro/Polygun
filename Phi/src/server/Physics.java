@@ -12,6 +12,9 @@ public class Physics {
 	
 	
 	public void update(long delta){
+		for(GameObject obj: world){
+			
+		}
 		
 	}
 
