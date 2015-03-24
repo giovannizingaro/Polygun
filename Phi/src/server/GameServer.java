@@ -126,18 +126,10 @@ public class GameServer {
 	}
 
 	private void newPlayerHandler(int id){
-		System.out.println("Sono in PlayerHandler");
-		Triangle triShape = new Triangle(
-				new Vector2(0.0, 0.5), 
-				new Vector2(-0.5, -0.5), 
-				new Vector2(0.5, -0.5));
-		GameObject triangle = new GameObject(id);
-		triangle.addFixture(triShape);
-		triangle.setMass();
-		triangle.translate(2, 5.0);
+		System.out.println("Creo un nuovo giocatore");
+		GameObject player = new GameObject(id,0,0);
 		world.addBody(triangle);
-		world.setUpdateRequired(true);
-		players.put(id, triangle);
+		players.put(id, player);
 	}
 
 	public GameServer() throws IOException {		

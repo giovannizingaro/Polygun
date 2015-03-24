@@ -10,11 +10,9 @@ public class GameObject {
 	private int y;
 	public Keyboard key; 
 
-
-
-	public GameObject(int x, int y) {
+	public GameObject(int id, int x, int y) {
 		super();
-		this.id  = COUNT;
+		this.id  = id;
 		this.x = x;
 		this.y = y;
 		COUNT ++;
